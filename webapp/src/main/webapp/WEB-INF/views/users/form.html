@@ -1,0 +1,87 @@
+<tag:layout title="Users">
+    <jsp:attribute name="page_content">
+        <form id="user">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" name="name"
+                               value="${user.name}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Login</label>
+                        <input type="text" class="form-control" name="login"
+                               id="login" value="${user.login}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control"
+                               name="password">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Role</label>
+                        <select class="form-control" name="roles" id="roles">
+                            <option value="USER">User</option>
+                            <option value="ADMIN">Admin</option>
+                        </select>
+                    </div>
+                </div>        
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select class="form-control" name="status" id="status">
+                            <option value="A">Active</option>
+                            <option value="I">Inactive</option>
+                        </select>
+                    </div>
+                </div>        
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <sec:csrfInput/>
+                    <input type="hidden" name="id" value="${user.id}">
+                    <input type="submit" class="btn btn-primary" value="Save">
+                </div>
+            </div>
+        </form>
+    </jsp:attribute>
+
+    <jsp:attribute name="custom_script">
+        <c:if test="${user.id > 0}">
+            <script>
+                $('#login').prop('readonly', true);
+                $('#login').prop('disabled', true);
+
+                $('#roles').val('${user.roles}');
+                $('#status').val('${user.status}');
+            </script>
+        </c:if>
+
+        <script>
+            $('#user').submit(function () {
+                $.post('${contextPath}/users/save', $(this).serialize(), function (response) {
+                    alert(response.message);
+                    if (!response.error) {
+                        location.href = '${contextPath}/users';
+                    }
+                });
+
+                return false;
+            });
+        </script>
+    </jsp:attribute>
+</tag:layout>

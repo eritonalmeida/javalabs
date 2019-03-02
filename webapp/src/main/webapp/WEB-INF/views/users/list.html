@@ -1,0 +1,50 @@
+<tag:layout title="Users">
+    <jsp:attribute name="page_content">
+        <sec:authorize access="hasRole('ADMIN')">
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="${contextPath}/users/create" class="btn btn-primary">New</a>
+                </div>
+            </div>
+        </sec:authorize>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Login</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Updated</th>
+                    <sec:authorize access="hasRole('ADMIN')">
+                        <th>Actions</th>
+                    </sec:authorize>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${users}" var="user">
+                        <tr>
+                            <td>${user.id}</td>
+                            <td>${user.name}</td>
+                            <td>${user.login}</td>
+                            <td>${user.roles}</td>
+                            <td>${user.status}</td>
+                            <td>
+                        <fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${user.updatedAt}" />
+                        </td>
+                        <sec:authorize access="hasRole('ADMIN')">
+                            <td>
+                                <a href="${contextPath}/users/edit/${user.id}">Edit</a> | 
+                                <a href="${contextPath}/users/delete/${user.id}">Delete</a>
+                            </td>
+                        </sec:authorize>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </jsp:attribute>
+</tag:layout>
