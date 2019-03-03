@@ -1,5 +1,8 @@
 package app.worker;
 
+import app.model.TestJobRequest;
+import app.model.TestJobResponse;
+import com.google.gson.Gson;
 import org.gearman.worker.AbstractGearmanFunction;
 import org.gearman.client.GearmanJobResult;
 import org.gearman.util.ByteUtils;
@@ -8,6 +11,8 @@ public class TestFunction extends AbstractGearmanFunction {
 
     public final static String QUEUE = "TestFunction";
 
+    Gson gson = new Gson();
+
     public TestFunction() {
         super(QUEUE);
     }
@@ -15,13 +20,17 @@ public class TestFunction extends AbstractGearmanFunction {
     @Override
     public GearmanJobResult executeFunction() {
 
-        String buffer = ByteUtils.fromUTF8Bytes((byte[]) this.data);
-        
-        System.out.println(buffer);
+        String json = ByteUtils.fromUTF8Bytes((byte[]) this.data);
 
-        String response = new StringBuffer(buffer).reverse().toString();
+        TestJobRequest user = gson.fromJson(json, TestJobRequest.class);
 
-        return JobResult.create(this.jobHandle, response.getBytes());
+        System.out.println(user.toString());
+
+        TestJobResponse response = new TestJobResponse();
+        response.setId(123456);
+        response.setSuccess(true);
+
+        return JobResult.create(this.jobHandle, response.toString().getBytes());
     }
 
 }

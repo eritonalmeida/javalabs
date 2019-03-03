@@ -1,6 +1,7 @@
 package app.test;
 
 import app.client.JobClient;
+import app.model.TestJobRequest;
 import app.worker.TestFunction;
 
 public class TestClient {
@@ -9,9 +10,11 @@ public class TestClient {
 
         JobClient client = new JobClient();
 
-        String payload = "1.2.3.4";
+        TestJobRequest user = new TestJobRequest();
+        user.setName("Eriton Almeida");
+        user.setEmail("erytonalmieda@gmail.com");
 
-        System.out.println(client.executeJob(TestFunction.QUEUE, payload));
+        System.out.println(client.executeJob(TestFunction.QUEUE, user.toString()));
 
         client.shutdown();
     }
