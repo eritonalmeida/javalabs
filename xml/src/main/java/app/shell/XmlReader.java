@@ -35,7 +35,7 @@ public class XmlReader {
             String from = parts[0].trim();
             String to = parts[1].trim();
 
-            if (from.equals("item")) {
+            if (to.equals("item")) {
                 item = to;
                 continue;
             }
