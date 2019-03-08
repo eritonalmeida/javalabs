@@ -44,7 +44,7 @@ public class MailReader {
             }
 
             for (int id = 1; id < count; id++) {
-                Message message = folder.getMessage(1);
+                Message message = folder.getMessage(id);
 
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
 
