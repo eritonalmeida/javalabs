@@ -24,6 +24,8 @@ public class Setup {
 
         System.out.println("user: admin");
         System.out.println("password: 123qwe");
+        
+        repository.close();
 
     }
 }
