@@ -7,13 +7,13 @@ import javax.persistence.Persistence;
 
 public abstract class AbstractRepository<T, ID> {
 
+    final private EntityManagerFactory factory;
     final protected EntityManager manager;
     final private Class<T> entityClass;
 
     public AbstractRepository(String persistenceUnit, Class<T> entityClass) {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory(persistenceUnit);
+        factory = Persistence.createEntityManagerFactory(persistenceUnit);
         manager = factory.createEntityManager();
-
         this.entityClass = entityClass;
     }
 
@@ -48,5 +48,10 @@ public abstract class AbstractRepository<T, ID> {
             manager.getTransaction().rollback();
             return false;
         }
+    }
+
+    final public void close() {
+        manager.close();
+        factory.close();
     }
 }
