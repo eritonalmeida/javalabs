@@ -1,6 +1,9 @@
 ### Install ###
 ``
 $ wsimport -b jaxws-custom.xml -s src/main/java -p com.amazon.ws.model -encoding UTF-8 -keep -Xnocompile http://webservices.amazon.com/AWSECommerceService/AWSECommerceService.wsdl
+``
+
+``
 $ mvn package
 ``
 ### Test ###
